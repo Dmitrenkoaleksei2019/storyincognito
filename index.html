@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StoryIncognito — Анонимный просмотр историй Instagram онлайн</title>
+<meta name="description" content="Просматривайте Stories из Instagram анонимно и без регистрации. Введите @username — мы покажем все активные истории. Бесплатно, без скачивания приложений.">
+<link rel="canonical" href="https://storyincognito.com/">
+<link rel="alternate" hreflang="ru" href="https://storyincognito.com/">
+<link rel="alternate" hreflang="uk" href="https://storyincognito.com/ua/">
+<link rel="alternate" hreflang="x-default" href="https://storyincognito.com/">
+<meta property="og:title" content="StoryIncognito — Анонимный просмотр Instagram Stories">
+<meta property="og:description" content="Введите @username — посмотрите истории анонимно и бесплатно. Никто не узнает, что вы смотрели.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://storyincognito.com/">
+<meta property="og:image" content="https://storyincognito.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: { brand: { 500: '#7c3aed', 600: '#6d28d9' } },
+        fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+      }
+    }
+  }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "StoryIncognito",
+  "url": "https://storyincognito.com/",
+  "description": "Анонимный просмотр Instagram Stories онлайн — без регистрации и без приложений.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "inLanguage": ["ru", "uk"],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Узнает ли пользователь, что я смотрел его истории?","acceptedAnswer":{"@type":"Answer","text":"Нет. StoryIncognito загружает историю напрямую с серверов Instagram, ваш аккаунт в этом не участвует, поэтому в списке зрителей вас не будет."}},
+    {"@type":"Question","name":"Нужна ли регистрация?","acceptedAnswer":{"@type":"Answer","text":"Нет. Сервис работает без логина, пароля и без скачивания приложений — достаточно ввести имя пользователя."}},
+    {"@type":"Question","name":"Можно ли смотреть истории закрытого аккаунта?","acceptedAnswer":{"@type":"Answer","text":"Нет, мы работаем только с публичными аккаунтами. Это требование Instagram, и мы его соблюдаем."}},
+    {"@type":"Question","name":"Можно ли скачать сторис?","acceptedAnswer":{"@type":"Answer","text":"Да. На странице /download/ вы можете сохранить сторис в исходном качестве — фото в JPG, видео в MP4."}},
+    {"@type":"Question","name":"Сервис бесплатный?","acceptedAnswer":{"@type":"Answer","text":"Полностью бесплатный, без лимитов и подписок. Сайт зарабатывает на ненавязчивой рекламе."}}
+  ]
+}
+</script>
+</head>
+<body class="font-sans antialiased text-slate-900 bg-white">
+
+<!-- ===== Header ===== -->
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-bold text-lg">
+      <span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-pink-500"></span>
+      StoryIncognito
+    </a>
+    <nav class="flex items-center gap-1 sm:gap-4 text-sm font-medium">
+      <a href="/" class="hidden sm:inline px-2 py-1 text-slate-700 hover:text-brand-600">Просмотр</a>
+      <a href="/download/" class="px-2 py-1 text-slate-700 hover:text-brand-600">Скачать</a>
+      <a href="/about/" class="hidden sm:inline px-2 py-1 text-slate-700 hover:text-brand-600">О сервисе</a>
+      <span class="mx-2 text-slate-300">|</span>
+      <a href="/" class="px-2 py-1 font-semibold text-brand-600">RU</a>
+      <a href="/ua/" class="px-2 py-1 text-slate-500 hover:text-brand-600">UA</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="relative overflow-hidden bg-slate-950 text-white">
+  <div class="absolute inset-0 opacity-30 pointer-events-none"
+       style="background:radial-gradient(60% 60% at 50% 0%, rgba(124,58,237,0.6) 0%, rgba(15,23,42,0) 60%), radial-gradient(40% 50% at 80% 100%, rgba(236,72,153,0.4) 0%, rgba(15,23,42,0) 70%);"></div>
+  <div class="relative max-w-4xl mx-auto px-4 py-16 sm:py-24 text-center">
+    <p class="inline-flex items-center gap-2 text-xs sm:text-sm font-medium px-3 py-1 rounded-full bg-white/10 ring-1 ring-white/15 mb-5">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Сервис работает онлайн
+    </p>
+    <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+      Анонимный просмотр<br class="hidden sm:block">
+      <span class="bg-gradient-to-r from-brand-500 to-pink-500 bg-clip-text text-transparent">историй Instagram</span>
+    </h1>
+    <p class="mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+      Введите имя пользователя — мы покажем все активные сторис. Без регистрации, без приложений, и владелец аккаунта не узнает.
+    </p>
+
+    <form id="searchForm" class="mt-8 max-w-xl mx-auto" autocomplete="off">
+      <div class="flex flex-col sm:flex-row gap-3 p-2 sm:p-2 bg-white rounded-2xl shadow-2xl shadow-brand-500/20 ring-1 ring-white/10">
+        <div class="flex items-center pl-3 sm:pl-4 text-slate-400 sm:flex-1">
+          <span class="text-slate-400 text-lg font-semibold">@</span>
+          <input id="username" name="username" type="text" required
+                 placeholder="username"
+                 pattern="[A-Za-z0-9_.]{1,30}"
+                 class="w-full ml-1 py-3 sm:py-3 text-slate-900 placeholder-slate-400 bg-transparent border-0 focus:ring-0 focus:outline-none text-base">
+        </div>
+        <button type="submit"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold hover:opacity-95 active:scale-[0.98] transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 11A5.65 5.65 0 1 1 5.35 11a5.65 5.65 0 0 1 11.3 0z"/></svg>
+          Посмотреть
+        </button>
+      </div>
+      <p class="mt-3 text-xs text-slate-400">
+        Только публичные аккаунты. Вводя имя, вы принимаете
+        <a href="/terms/" class="underline hover:text-white">условия использования</a>.
+      </p>
+    </form>
+
+    <!-- Trust row -->
+    <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-400">
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Без регистрации</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Анонимно</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Бесплатно</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Работает в браузере</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Results panel ===== -->
+<section id="results" class="hidden bg-slate-50 border-y border-slate-200">
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <div id="resultsContent"></div>
+  </div>
+</section>
+
+<!-- ===== How it works ===== -->
+<section class="py-16 sm:py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Как это работает</h2>
+    <p class="mt-2 text-center text-slate-600">Три шага — и вы видите истории</p>
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">1</div>
+        <h3 class="mt-4 font-semibold">Введите username</h3>
+        <p class="mt-1 text-sm text-slate-600">Имя пользователя без знака @ — например, cristiano. Только публичные аккаунты.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">2</div>
+        <h3 class="mt-4 font-semibold">Получите истории</h3>
+        <p class="mt-1 text-sm text-slate-600">Сервис обращается к Instagram напрямую и показывает все активные сторис за последние 24 часа.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">3</div>
+        <h3 class="mt-4 font-semibold">Смотрите анонимно</h3>
+        <p class="mt-1 text-sm text-slate-600">Ваш аккаунт не задействован — владелец сторис не увидит вас в списке зрителей.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Features ===== -->
+<section class="py-16 sm:py-20 bg-slate-50 border-y border-slate-200">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Почему выбирают StoryIncognito</h2>
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Полная анонимность</h3>
+        <p class="mt-2 text-sm text-slate-600">Мы не используем ваш аккаунт. Запрос к Instagram идёт от нашего сервера, поэтому в списке зрителей вашего имени не будет.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Без регистрации и приложений</h3>
+        <p class="mt-2 text-sm text-slate-600">Не нужен логин, пароль или установка софта. Открыли страницу — ввели username — увидели сторис.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Скачивание в оригинале</h3>
+        <p class="mt-2 text-sm text-slate-600">Сохраняйте фото в JPG, видео в MP4 без сжатия и водяных знаков. Раздел «<a href="/download/" class="text-brand-600 underline">Скачать сторис</a>».</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Работает в любом браузере</h3>
+        <p class="mt-2 text-sm text-slate-600">На компьютере, планшете и телефоне — без установки. Поддержка Chrome, Safari, Firefox и Edge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="py-16 sm:py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Частые вопросы</h2>
+    <div class="mt-10 space-y-3">
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Узнает ли пользователь, что я смотрел его истории?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Нет. Мы загружаем сторис от имени собственного сервиса, а не от вашего аккаунта. Поэтому в списке зрителей вас не будет — ни сейчас, ни позже.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Нужна ли регистрация или вход в Instagram?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Нет. Сервис не запрашивает ни логин, ни пароль. Все, что нужно — это имя пользователя того аккаунта, чьи сторис вы хотите увидеть.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Можно ли смотреть истории закрытого профиля?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Нет, мы работаем только с публичными аккаунтами. Это требование Instagram, и мы его не нарушаем.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Можно ли сохранить сторис на телефон?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Да. У каждой истории есть кнопка «Скачать» — фото сохраняется в JPG, видео в MP4 в исходном качестве. Подробнее на странице <a href="/download/" class="underline text-brand-600">«Скачать сторис»</a>.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Сервис платный?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Полностью бесплатный, без лимитов и подписки. Сайт существует за счёт ненавязчивой рекламы.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SEO content block ===== -->
+<section class="py-16 bg-slate-50 border-t border-slate-200">
+  <div class="max-w-3xl mx-auto px-4 prose prose-slate prose-sm sm:prose-base">
+    <h2 class="text-2xl font-bold">Просмотр историй Instagram анонимно — что это и как работает</h2>
+    <p>Stories в Instagram — это публикации, которые исчезают через 24 часа. Если вы смотрите историю с собственного аккаунта, ваше имя сразу появляется в списке зрителей у автора. Иногда этого хочется избежать: проверить контент конкурента, посмотреть на бывшего, оценить блог перед подпиской.</p>
+    <p>StoryIncognito решает задачу за два шага. Вы вводите username — например, <em>nasa</em> или <em>cristiano</em> — и наш сервер делает запрос к публичным данным Instagram через официальный graph-протокол. В ответе приходят активные сторис за последние 24 часа: фото, видео, опросы, ссылки. Вы видите их в браузере без авторизации, и ваш аккаунт нигде не светится.</p>
+    <h3>Когда сервис не сработает</h3>
+    <ul>
+      <li>Аккаунт закрытый (приватный) — Instagram не отдаёт сторис закрытых профилей никому, кроме одобренных подписчиков.</li>
+      <li>У пользователя нет активных сторис на текущий момент.</li>
+      <li>Аккаунт удалён или заблокирован.</li>
+    </ul>
+    <h3>Чем StoryIncognito отличается от других сервисов</h3>
+    <p>Основные конкуренты на русскоязычном рынке требуют регистрации, ставят водяные знаки на скачанные файлы или блокируют скачивание видео. У нас этих ограничений нет: вы можете бесплатно посмотреть и скачать сторис в исходном качестве. Никаких ограничений по числу запросов в сутки.</p>
+    <p>Если вам нужна не только функция просмотра, но и быстрое скачивание — переходите в раздел <a href="/download/" class="text-brand-600 underline">скачивание сторис</a>. Украиноязычная версия сайта доступна по ссылке <a href="/ua/" class="text-brand-600 underline">/ua/</a>.</p>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer class="bg-slate-950 text-slate-300">
+  <div class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
+    <div class="col-span-2 sm:col-span-1">
+      <a href="/" class="flex items-center gap-2 font-bold text-white text-lg">
+        <span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-pink-500"></span>
+        StoryIncognito
+      </a>
+      <p class="mt-3 text-slate-400">Анонимный просмотр и скачивание Instagram Stories. Бесплатно, без регистрации.</p>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Сервис</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/" class="hover:text-white">Просмотр сторис</a></li>
+        <li><a href="/download/" class="hover:text-white">Скачать сторис</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Языки</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/" class="hover:text-white">Русский</a></li>
+        <li><a href="/ua/" class="hover:text-white">Українська</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Информация</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/about/" class="hover:text-white">О сервисе</a></li>
+        <li><a href="/privacy/" class="hover:text-white">Политика конфиденциальности</a></li>
+        <li><a href="/terms/" class="hover:text-white">Условия использования</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-5 text-xs text-slate-500 flex flex-col sm:flex-row justify-between gap-2">
+      <span>© 2026 StoryIncognito. Сервис не аффилирован с Meta Platforms, Inc.</span>
+      <span>Используются публичные данные Instagram.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== Search logic ===== -->
+<script>
+(function () {
+  const form = document.getElementById('searchForm');
+  const input = document.getElementById('username');
+  const results = document.getElementById('results');
+  const content = document.getElementById('resultsContent');
+
+  function clean(u) {
+    return u.trim().replace(/^@+/, '').toLowerCase();
+  }
+
+  function render(state) {
+    if (state.kind === 'loading') {
+      content.innerHTML = `
+        <div class="flex items-center gap-3 text-slate-700">
+          <span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span>
+          Загружаем истории <strong>@${state.username}</strong>…
+        </div>`;
+    } else if (state.kind === 'empty') {
+      content.innerHTML = `
+        <div class="rounded-2xl bg-white border border-slate-200 p-6 text-center">
+          <h3 class="font-semibold text-lg">У <strong>@${state.username}</strong> нет активных историй</h3>
+          <p class="mt-2 text-slate-600 text-sm">Скорее всего, пользователь не публиковал сторис за последние 24 часа. Попробуйте ещё раз позже или проверьте другой аккаунт.</p>
+        </div>`;
+    } else if (state.kind === 'error') {
+      content.innerHTML = `
+        <div class="rounded-2xl bg-red-50 border border-red-200 p-6 text-red-800">
+          <h3 class="font-semibold">Не удалось загрузить истории</h3>
+          <p class="mt-1 text-sm">${state.message}</p>
+        </div>`;
+    } else if (state.kind === 'ok') {
+      const items = state.items.map((it, i) => `
+        <a href="${it.url}" target="_blank" rel="noopener"
+           class="block aspect-[9/16] rounded-2xl overflow-hidden bg-slate-200 group relative">
+          ${it.type === 'video'
+            ? `<video src="${it.url}" muted playsinline class="w-full h-full object-cover" preload="metadata"></video>`
+            : `<img src="${it.thumb || it.url}" alt="Story ${i+1}" class="w-full h-full object-cover" loading="lazy">`}
+          <span class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100">
+            <span class="px-3 py-1 rounded-full bg-white/95 text-xs font-semibold text-slate-900">Открыть</span>
+          </span>
+          ${it.type === 'video' ? '<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/60 text-white text-[11px]">▶ video</span>' : ''}
+        </a>`).join('');
+      content.innerHTML = `
+        <div class="flex items-baseline justify-between mb-5">
+          <h3 class="text-lg font-semibold">Истории <strong>@${state.username}</strong></h3>
+          <span class="text-sm text-slate-500">${state.items.length} ${state.items.length === 1 ? 'история' : 'историй'}</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">${items}</div>
+        <p class="mt-5 text-xs text-slate-500">Хотите сохранить файлы на устройство? Перейдите в раздел
+          <a href="/download/" class="text-brand-600 underline">Скачать сторис</a>.</p>`;
+    }
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = clean(input.value);
+    if (!username) return;
+    render({ kind: 'loading', username });
+    try {
+      const r = await fetch(`/api/stories?username=${encodeURIComponent(username)}`);
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      if (!data.items || data.items.length === 0) {
+        render({ kind: 'empty', username });
+      } else {
+        render({ kind: 'ok', username, items: data.items });
+      }
+    } catch (err) {
+      render({ kind: 'error', message: err.message || 'Попробуйте позже.' });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

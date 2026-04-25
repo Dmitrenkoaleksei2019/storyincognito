@@ -1,0 +1,9 @@
+{
+  "name": "storyincognito",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Анонимный просмотр и скачивание Instagram Stories",
+  "engines": {
+    "node": ">=18"
+  }
+}

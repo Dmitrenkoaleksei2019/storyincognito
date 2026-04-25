@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>О сервисе StoryIncognito — анонимный просмотр Instagram Stories</title>
+<meta name="description" content="StoryIncognito — бесплатный сервис для анонимного просмотра и скачивания публичных историй Instagram. Подробнее о том, как мы работаем.">
+<link rel="canonical" href="https://storyincognito.com/about/">
+<meta name="robots" content="index, follow">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>tailwind.config = { theme: { extend: { colors: { brand: { 500: '#7c3aed', 600: '#6d28d9' } }, fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+</head>
+<body class="font-sans antialiased text-slate-900 bg-white">
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2 font-bold text-lg"><span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-pink-500"></span>StoryIncognito</a>
+    <nav class="flex items-center gap-1 sm:gap-4 text-sm font-medium">
+      <a href="/" class="px-2 py-1 text-slate-700 hover:text-brand-600">Просмотр</a>
+      <a href="/download/" class="px-2 py-1 text-slate-700 hover:text-brand-600">Скачать</a>
+      <span class="mx-2 text-slate-300">|</span>
+      <a href="/" class="px-2 py-1 font-semibold text-brand-600">RU</a>
+      <a href="/ua/" class="px-2 py-1 text-slate-500 hover:text-brand-600">UA</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 py-12 prose prose-slate prose-sm sm:prose-base">
+<h1 class="text-3xl font-extrabold">О сервисе StoryIncognito</h1>
+
+<p>StoryIncognito — бесплатный онлайн-сервис, который позволяет посмотреть и сохранить публичные Instagram Stories анонимно: ваш аккаунт в Instagram нигде не светится, а владелец сторис не получает уведомления о просмотре.</p>
+
+<h2>Зачем сервис нужен</h2>
+<p>В Instagram нет штатной возможности увидеть чужие сторис, не оставив следа в списке зрителей. Также нет кнопки «Скачать» для контента других пользователей. StoryIncognito закрывает обе задачи в одном интерфейсе.</p>
+
+<h2>Как мы работаем</h2>
+<p>Мы не используем ваш Instagram-аккаунт. Когда вы вводите username, наш сервер обращается к публичному API Instagram через стороннего провайдера данных и возвращает ссылки на медиа-файлы. Ваш браузер показывает их вам напрямую.</p>
+
+<h2>Кто стоит за сервисом</h2>
+<p>StoryIncognito — независимый проект, не связанный с Meta Platforms, Inc. Мы соблюдаем правила, изложенные в наших <a href="/terms/" class="underline text-brand-600">Условиях использования</a> и <a href="/privacy/" class="underline text-brand-600">Политике конфиденциальности</a>.</p>
+
+<h2>Связаться с нами</h2>
+<p>По вопросам сотрудничества, рекламы и обратной связи: <a href="mailto:hello@storyincognito.com" class="underline">hello@storyincognito.com</a>.</p>
+
+<p class="mt-8 text-sm"><a href="/" class="text-brand-600 underline">← На главную</a></p>
+</main>
+
+<footer class="bg-slate-950 text-slate-300 mt-12">
+  <div class="max-w-6xl mx-auto px-4 py-6 text-xs text-slate-500 flex flex-col sm:flex-row justify-between gap-2">
+    <span>© 2026 StoryIncognito. Сервис не аффилирован с Meta Platforms, Inc.</span>
+    <span><a href="/privacy/" class="hover:text-white">Конфиденциальность</a> · <a href="/terms/" class="hover:text-white">Условия</a></span>
+  </div>
+</footer>
+</body>
+</html>

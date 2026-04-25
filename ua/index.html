@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StoryIncognito — Анонімний перегляд історій Instagram онлайн</title>
+<meta name="description" content="Переглядайте Stories з Instagram анонімно та без реєстрації. Введіть @username — ми покажемо всі активні історії. Безкоштовно, без встановлення додатків.">
+<link rel="canonical" href="https://storyincognito.com/ua/">
+<link rel="alternate" hreflang="ru" href="https://storyincognito.com/">
+<link rel="alternate" hreflang="uk" href="https://storyincognito.com/ua/">
+<link rel="alternate" hreflang="x-default" href="https://storyincognito.com/">
+<meta property="og:title" content="StoryIncognito — Анонімний перегляд Instagram Stories">
+<meta property="og:description" content="Введіть @username — подивіться сторіс анонімно та безкоштовно.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://storyincognito.com/ua/">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config = { theme: { extend: { colors: { brand: { 500: '#7c3aed', 600: '#6d28d9' } }, fontFamily: { sans: ['Inter','system-ui','sans-serif'] } } } }</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "StoryIncognito",
+  "url": "https://storyincognito.com/ua/",
+  "description": "Анонімний перегляд Instagram Stories онлайн — без реєстрації та без застосунків.",
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "uk",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Чи дізнається користувач, що я переглянув його сторіс?","acceptedAnswer":{"@type":"Answer","text":"Ні. StoryIncognito завантажує сторіс напряму з серверів Instagram, ваш акаунт у цьому не бере участі, тому в списку глядачів вас не буде."}},
+    {"@type":"Question","name":"Чи потрібна реєстрація?","acceptedAnswer":{"@type":"Answer","text":"Ні. Сервіс працює без логіну, паролю та без встановлення застосунків."}},
+    {"@type":"Question","name":"Чи можна дивитись сторіс закритого акаунту?","acceptedAnswer":{"@type":"Answer","text":"Ні, ми працюємо лише з публічними акаунтами."}},
+    {"@type":"Question","name":"Чи можна завантажити сторіс?","acceptedAnswer":{"@type":"Answer","text":"Так. На сторінці /ua/zavantazhyty/ можна зберегти сторіс у вихідній якості — фото у JPG, відео у MP4."}},
+    {"@type":"Question","name":"Сервіс безкоштовний?","acceptedAnswer":{"@type":"Answer","text":"Повністю безкоштовний, без лімітів і без передплати."}}
+  ]
+}
+</script>
+</head>
+<body class="font-sans antialiased text-slate-900 bg-white">
+
+<header class="sticky top-0 z-30 bg-white/85 backdrop-blur border-b border-slate-200">
+  <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+    <a href="/ua/" class="flex items-center gap-2 font-bold text-lg">
+      <span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-pink-500"></span>
+      StoryIncognito
+    </a>
+    <nav class="flex items-center gap-1 sm:gap-4 text-sm font-medium">
+      <a href="/ua/" class="hidden sm:inline px-2 py-1 text-slate-700 hover:text-brand-600">Перегляд</a>
+      <a href="/ua/zavantazhyty/" class="px-2 py-1 text-slate-700 hover:text-brand-600">Завантажити</a>
+      <a href="/about/" class="hidden sm:inline px-2 py-1 text-slate-700 hover:text-brand-600">Про сервіс</a>
+      <span class="mx-2 text-slate-300">|</span>
+      <a href="/" class="px-2 py-1 text-slate-500 hover:text-brand-600">RU</a>
+      <a href="/ua/" class="px-2 py-1 font-semibold text-brand-600">UA</a>
+    </nav>
+  </div>
+</header>
+
+<section class="relative overflow-hidden bg-slate-950 text-white">
+  <div class="absolute inset-0 opacity-30 pointer-events-none"
+       style="background:radial-gradient(60% 60% at 50% 0%, rgba(124,58,237,0.6) 0%, rgba(15,23,42,0) 60%), radial-gradient(40% 50% at 80% 100%, rgba(236,72,153,0.4) 0%, rgba(15,23,42,0) 70%);"></div>
+  <div class="relative max-w-4xl mx-auto px-4 py-16 sm:py-24 text-center">
+    <p class="inline-flex items-center gap-2 text-xs sm:text-sm font-medium px-3 py-1 rounded-full bg-white/10 ring-1 ring-white/15 mb-5">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Сервіс працює онлайн
+    </p>
+    <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight">
+      Анонімний перегляд<br class="hidden sm:block">
+      <span class="bg-gradient-to-r from-brand-500 to-pink-500 bg-clip-text text-transparent">історій Instagram</span>
+    </h1>
+    <p class="mt-5 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+      Введіть ім'я користувача — ми покажемо всі активні сторіс. Без реєстрації, без застосунків, і власник акаунту не дізнається.
+    </p>
+
+    <form id="searchForm" class="mt-8 max-w-xl mx-auto" autocomplete="off">
+      <div class="flex flex-col sm:flex-row gap-3 p-2 sm:p-2 bg-white rounded-2xl shadow-2xl shadow-brand-500/20 ring-1 ring-white/10">
+        <div class="flex items-center pl-3 sm:pl-4 text-slate-400 sm:flex-1">
+          <span class="text-slate-400 text-lg font-semibold">@</span>
+          <input id="username" name="username" type="text" required
+                 placeholder="username" pattern="[A-Za-z0-9_.]{1,30}"
+                 class="w-full ml-1 py-3 sm:py-3 text-slate-900 placeholder-slate-400 bg-transparent border-0 focus:ring-0 focus:outline-none text-base">
+        </div>
+        <button type="submit"
+                class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold hover:opacity-95 active:scale-[0.98] transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 11A5.65 5.65 0 1 1 5.35 11a5.65 5.65 0 0 1 11.3 0z"/></svg>
+          Переглянути
+        </button>
+      </div>
+      <p class="mt-3 text-xs text-slate-400">
+        Лише публічні акаунти. Ввівши ім'я, ви приймаєте <a href="/terms/" class="underline hover:text-white">умови використання</a>.
+      </p>
+    </form>
+
+    <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-slate-400">
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Без реєстрації</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Анонімно</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Безкоштовно</span>
+      <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> Працює у браузері</span>
+    </div>
+  </div>
+</section>
+
+<section id="results" class="hidden bg-slate-50 border-y border-slate-200">
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <div id="resultsContent"></div>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Як це працює</h2>
+    <p class="mt-2 text-center text-slate-600">Три кроки — і ви бачите історії</p>
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-6">
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">1</div>
+        <h3 class="mt-4 font-semibold">Введіть username</h3>
+        <p class="mt-1 text-sm text-slate-600">Ім'я користувача без знаку @ — наприклад, cristiano. Лише публічні акаунти.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">2</div>
+        <h3 class="mt-4 font-semibold">Отримайте історії</h3>
+        <p class="mt-1 text-sm text-slate-600">Сервіс звертається до Instagram напряму та показує всі активні сторіс за останні 24 години.</p>
+      </div>
+      <div class="rounded-2xl border border-slate-200 p-6">
+        <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-600 flex items-center justify-center font-bold">3</div>
+        <h3 class="mt-4 font-semibold">Дивіться анонімно</h3>
+        <p class="mt-1 text-sm text-slate-600">Ваш акаунт не бере участі — власник сторіс не побачить вас у списку глядачів.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20 bg-slate-50 border-y border-slate-200">
+  <div class="max-w-5xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Чому обирають StoryIncognito</h2>
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Повна анонімність</h3>
+        <p class="mt-2 text-sm text-slate-600">Ми не використовуємо ваш акаунт. Запит до Instagram йде з нашого серверу, тому у списку глядачів вашого імені не буде.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Без реєстрації та застосунків</h3>
+        <p class="mt-2 text-sm text-slate-600">Не потрібен логін, пароль або встановлення софту. Відкрили сторінку — ввели username — побачили сторіс.</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Завантаження в оригіналі</h3>
+        <p class="mt-2 text-sm text-slate-600">Зберігайте фото у JPG, відео у MP4 без стиснення та водяних знаків. Розділ «<a href="/ua/zavantazhyty/" class="text-brand-600 underline">Завантажити сторіс</a>».</p>
+      </div>
+      <div class="rounded-2xl bg-white p-6 border border-slate-200">
+        <h3 class="font-semibold text-lg">Працює у будь-якому браузері</h3>
+        <p class="mt-2 text-sm text-slate-600">На комп'ютері, планшеті та телефоні — без встановлення. Підтримка Chrome, Safari, Firefox та Edge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20 bg-white">
+  <div class="max-w-3xl mx-auto px-4">
+    <h2 class="text-2xl sm:text-3xl font-bold text-center">Часті запитання</h2>
+    <div class="mt-10 space-y-3">
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Чи дізнається користувач, що я переглянув його сторіс?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Ні. Ми завантажуємо сторіс від імені сервісу, а не від вашого акаунту. Тому у списку глядачів вас не буде.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Чи потрібна реєстрація або вхід в Instagram?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Ні. Сервіс не запитує ані логін, ані пароль. Усе, що потрібно — username акаунту, чиї сторіс ви хочете побачити.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Чи можна дивитись історії закритого профілю?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Ні, ми працюємо лише з публічними акаунтами.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Чи можна зберегти сторіс на телефон?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Так. У кожної історії є кнопка «Завантажити» — фото зберігається у JPG, відео у MP4 у вихідній якості. Детально на сторінці <a href="/ua/zavantazhyty/" class="underline text-brand-600">«Завантажити сторіс»</a>.</p>
+      </details>
+      <details class="group rounded-2xl border border-slate-200 p-5 open:bg-slate-50">
+        <summary class="flex items-center justify-between cursor-pointer font-semibold">Сервіс платний?
+          <span class="ml-4 text-slate-400 group-open:rotate-180 transition">▼</span></summary>
+        <p class="mt-3 text-slate-600 text-sm">Повністю безкоштовний, без лімітів та передплати.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-slate-50 border-t border-slate-200">
+  <div class="max-w-3xl mx-auto px-4 prose prose-slate prose-sm sm:prose-base">
+    <h2 class="text-2xl font-bold">Перегляд історій Instagram анонімно — як це працює</h2>
+    <p>Stories у Instagram — публікації, які зникають через 24 години. Якщо ви дивитесь сторіс зі свого акаунту, ваше ім'я одразу з'являється у списку глядачів. Інколи цього хочеться уникнути: перевірити контент конкурента, подивитись на колишнього, оцінити блог перед підпискою.</p>
+    <p>StoryIncognito виконує задачу за два кроки. Ви вводите username — наприклад, <em>nasa</em> чи <em>cristiano</em> — і наш сервер робить запит до публічних даних Instagram через офіційний graph-протокол. У відповідь надходять активні сторіс за останні 24 години: фото, відео, опитування, посилання. Ви бачите їх у браузері без авторизації, і ваш акаунт ніде не світиться.</p>
+    <h3>Коли сервіс не спрацює</h3>
+    <ul>
+      <li>Акаунт закритий (приватний) — Instagram не віддає сторіс таких профілів стороннім сервісам.</li>
+      <li>У користувача немає активних сторіс на цей момент.</li>
+      <li>Акаунт видалений або заблокований.</li>
+    </ul>
+    <p>Якщо вам треба не лише переглянути, а й завантажити файл — переходьте до розділу <a href="/ua/zavantazhyty/" class="text-brand-600 underline">завантаження сторіс</a>. Російськомовна версія сайту: <a href="/" class="text-brand-600 underline">/</a>.</p>
+  </div>
+</section>
+
+<footer class="bg-slate-950 text-slate-300">
+  <div class="max-w-6xl mx-auto px-4 py-12 grid grid-cols-2 sm:grid-cols-4 gap-8 text-sm">
+    <div class="col-span-2 sm:col-span-1">
+      <a href="/ua/" class="flex items-center gap-2 font-bold text-white text-lg">
+        <span class="inline-block w-8 h-8 rounded-lg bg-gradient-to-br from-brand-500 to-pink-500"></span>
+        StoryIncognito
+      </a>
+      <p class="mt-3 text-slate-400">Анонімний перегляд та завантаження Instagram Stories. Безкоштовно, без реєстрації.</p>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Сервіс</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/ua/" class="hover:text-white">Перегляд сторіс</a></li>
+        <li><a href="/ua/zavantazhyty/" class="hover:text-white">Завантажити сторіс</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Мови</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/" class="hover:text-white">Російська</a></li>
+        <li><a href="/ua/" class="hover:text-white">Українська</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-semibold text-white">Інформація</h4>
+      <ul class="mt-3 space-y-2">
+        <li><a href="/about/" class="hover:text-white">Про сервіс</a></li>
+        <li><a href="/privacy/" class="hover:text-white">Політика конфіденційності</a></li>
+        <li><a href="/terms/" class="hover:text-white">Умови використання</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="max-w-6xl mx-auto px-4 py-5 text-xs text-slate-500 flex flex-col sm:flex-row justify-between gap-2">
+      <span>© 2026 StoryIncognito. Сервіс не афілійований з Meta Platforms, Inc.</span>
+      <span>Використовуються публічні дані Instagram.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const form = document.getElementById('searchForm');
+  const input = document.getElementById('username');
+  const results = document.getElementById('results');
+  const content = document.getElementById('resultsContent');
+  function clean(u) { return u.trim().replace(/^@+/, '').toLowerCase(); }
+  function render(state) {
+    if (state.kind === 'loading') {
+      content.innerHTML = `<div class="flex items-center gap-3 text-slate-700"><span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span>Завантажуємо історії <strong>@${state.username}</strong>…</div>`;
+    } else if (state.kind === 'empty') {
+      content.innerHTML = `<div class="rounded-2xl bg-white border border-slate-200 p-6 text-center"><h3 class="font-semibold text-lg">У <strong>@${state.username}</strong> немає активних історій</h3><p class="mt-2 text-slate-600 text-sm">Скоріш за все, користувач не публікував сторіс за останні 24 години. Спробуйте пізніше або інший акаунт.</p></div>`;
+    } else if (state.kind === 'error') {
+      content.innerHTML = `<div class="rounded-2xl bg-red-50 border border-red-200 p-6 text-red-800"><h3 class="font-semibold">Не вдалося завантажити історії</h3><p class="mt-1 text-sm">${state.message}</p></div>`;
+    } else if (state.kind === 'ok') {
+      const items = state.items.map((it, i) => `
+        <a href="${it.url}" target="_blank" rel="noopener" class="block aspect-[9/16] rounded-2xl overflow-hidden bg-slate-200 group relative">
+          ${it.type === 'video' ? `<video src="${it.url}" muted playsinline class="w-full h-full object-cover" preload="metadata"></video>` : `<img src="${it.thumb || it.url}" alt="Story ${i+1}" class="w-full h-full object-cover" loading="lazy">`}
+          <span class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition flex items-end justify-center pb-3 opacity-0 group-hover:opacity-100"><span class="px-3 py-1 rounded-full bg-white/95 text-xs font-semibold text-slate-900">Відкрити</span></span>
+          ${it.type === 'video' ? '<span class="absolute top-2 right-2 px-2 py-0.5 rounded-md bg-black/60 text-white text-[11px]">▶ video</span>' : ''}
+        </a>`).join('');
+      content.innerHTML = `<div class="flex items-baseline justify-between mb-5"><h3 class="text-lg font-semibold">Історії <strong>@${state.username}</strong></h3><span class="text-sm text-slate-500">${state.items.length}</span></div><div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">${items}</div><p class="mt-5 text-xs text-slate-500">Хочете зберегти файли на пристрій? Перейдіть до розділу <a href="/ua/zavantazhyty/" class="text-brand-600 underline">Завантажити сторіс</a>.</p>`;
+    }
+    results.classList.remove('hidden');
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = clean(input.value);
+    if (!username) return;
+    render({ kind: 'loading', username });
+    try {
+      const r = await fetch(`/api/stories?username=${encodeURIComponent(username)}`);
+      const data = await r.json();
+      if (!r.ok) throw new Error(data.error || `HTTP ${r.status}`);
+      if (!data.items || data.items.length === 0) render({ kind: 'empty', username });
+      else render({ kind: 'ok', username, items: data.items });
+    } catch (err) {
+      render({ kind: 'error', message: err.message || 'Спробуйте пізніше.' });
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
