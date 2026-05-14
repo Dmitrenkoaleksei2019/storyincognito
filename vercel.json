@@ -20,6 +20,14 @@
     }
   ],
   "functions": {
-    "api/stories.js": { "maxDuration": 10 }
-  }
+    "api/stories.js": { "maxDuration": 10 },
+    "api/portrait.js": { "maxDuration": 30 },
+    "api/cron/daily-report.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/daily-report",
+      "schedule": "8 6 * * *"
+    }
+  ]
 }
