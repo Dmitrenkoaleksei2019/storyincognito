@@ -62,10 +62,38 @@ function clientIp(req) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Промпт на фановый портрет
+// Промпт на фановый портрет.
+// Формат заточен под то, чтобы хорошо выглядеть и на сайте (с Markdown),
+// и в копипасте в Telegram/Twitter (эмодзи выживают, ** не мешает).
 function buildPrompt(usernames, lang) {
-  const list = usernames.slice(0, 400).join(', '); // ограничиваем размер input
+  const list = usernames.slice(0, 400).join(', ');
   const count = usernames.length;
+
+  const formatRules = [
+    'STRUCTURE — use this exact format, do NOT use # markdown headers:',
+    '',
+    '🎭 **<punchy one-line headline>**',
+    '',
+    '👤 **<2-3 sentences setting the scene: age, gender, likely city, vibe>**',
+    '',
+    '💼 **Професія:** ... (or profession in EN)',
+    '',
+    '✨ **Спосіб життя:** ... (lifestyle, places, habits)',
+    '',
+    '🎨 **Внутрішній світ:** ... (values, beliefs, what she cares about)',
+    '',
+    '⚡ **Протиріччя:** ... (the most interesting contradiction in the list)',
+    '',
+    '🏷️ **Вердикт:** <one-line catchy summary>',
+    '',
+    'RULES:',
+    '- Translate the section titles to the target language (Ukrainian or English)',
+    '- Each section title starts with exactly one emoji from the list above',
+    '- Inside paragraphs, cite specific account names in backticks: `someusername`',
+    '- Use **bold** only for the section labels (Професія:, Lifestyle: etc.), not random words',
+    '- Total length: 350–500 words',
+    '- Voice: witty, observational, slightly ironic — never cruel, never stereotype protected attributes',
+  ].join('\n');
 
   if (lang === 'en') {
     return {
@@ -73,13 +101,11 @@ function buildPrompt(usernames, lang) {
         'You are a witty culture analyst. From a list of Instagram accounts someone follows, you ' +
         'reconstruct a vivid, playful psychological portrait of the person — age range, likely city, ' +
         'profession or industry, lifestyle, hobbies, beliefs, contradictions. Use light humor and ' +
-        'irony, but stay kind. Never be cruel or stereotype protected attributes harshly. End with a ' +
-        'short summary verdict. Return plain text in Markdown (use **bold** for key points). 350–500 words.',
+        'irony, but stay kind. Never be cruel or stereotype protected attributes harshly. ' +
+        'Respond in English.\n\n' + formatRules,
       user:
-        `Here is a list of ${count} Instagram accounts that one person follows. Build a fun ` +
-        `psychological portrait of this user — who they probably are, where they live, what they do, ` +
-        `what they care about, what their contradictions are. Be specific and observational, lean ` +
-        `into concrete clues from the list.\n\nAccounts:\n${list}`,
+        `Here are ${count} Instagram accounts that one person follows. Build a fun psychological ` +
+        `portrait following the structure above.\n\nAccounts:\n${list}`,
     };
   }
 
@@ -89,14 +115,12 @@ function buildPrompt(usernames, lang) {
       'Ти — спостережливий культурний аналітик з гострим почуттям гумору. На основі списку Instagram-' +
       'акаунтів, на які підписана людина, ти збираєш живий, грайливий психологічний портрет: вік, ' +
       'імовірне місто, професія чи сфера, спосіб життя, хобі, переконання, протиріччя. Використовуй ' +
-      'легкий гумор та іронію, але без жорстокості. Не стереотипізуй захищені характеристики (раса, ' +
-      'релігія, орієнтація). Завершуй коротким "вердиктом". Формат — звичайний текст з Markdown ' +
-      '(використовуй **жирне** для ключових тез). Обсяг — 350–500 слів. Мова відповіді — українська.',
+      'легкий гумор та іронію, але без жорстокості. Не стереотипізуй захищені характеристики ' +
+      '(раса, релігія, орієнтація). Відповідай українською мовою.\n\n' + formatRules,
     user:
       `Ось список з ${count} Instagram-акаунтів, на які підписана одна людина. Збери фановий ` +
-      `психологічний портрет цієї людини — хто вона ймовірно, де живе, чим займається, що для неї ` +
-      `важливо, які в неї протиріччя. Будь конкретним: спирайся на конкретні підказки зі списку.\n\n` +
-      `Акаунти:\n${list}`,
+      `психологічний портрет за форматом вище. Спирайся на конкретні підказки зі списку — ` +
+      `називай конкретні акаунти в backticks.\n\nАкаунти:\n${list}`,
   };
 }
 
@@ -105,8 +129,9 @@ function buildPrompt(usernames, lang) {
 // Максимум — MAX_PAGES страниц × 50 ников = до MAX_USERNAMES.
 // Это защита от случая «у юзера 5000 подписок» — мы НЕ хотим тянуть всё,
 // потому что (а) дорого по квоте, (б) качество портрета на 200-400 ников выше.
-const MAX_PAGES = 8;          // 8 × 50 = 400 ников максимум
-const MAX_USERNAMES = 400;
+const MAX_PAGES = 4;          // 4 × 50 = 200 ников максимум (компромисс время/качество)
+const MAX_USERNAMES = 200;
+const FETCH_TIMEOUT_MS = 7000; // на один запрос к RapidAPI
 
 async function fetchFollowing(username) {
   const KEY  = process.env.RAPIDAPI_KEY;
@@ -140,21 +165,36 @@ async function fetchFollowing(username) {
       url = `https://${HOST}${PATH}${sep}${params.toString()}`;
     }
 
-    const r = await fetch(url, {
-      headers: {
-        'x-rapidapi-key': KEY,
-        'x-rapidapi-host': HOST,
-        'accept': 'application/json',
-      },
-    });
-    lastStatus = r.status;
-    const text = await r.text();
-    let data;
+    let r, text, data;
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+      r = await fetch(url, {
+        headers: {
+          'x-rapidapi-key': KEY,
+          'x-rapidapi-host': HOST,
+          'accept': 'application/json',
+        },
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+      lastStatus = r.status;
+      text = await r.text();
+    } catch (e) {
+      console.error('RapidAPI fetch failed', { page, error: e.name, message: e.message });
+      // Если первая страница тайм-аут — фатальная ошибка. Иначе берём что собрали.
+      if (page === 0) {
+        const err = new Error('Provider timeout');
+        err.providerStatus = 504;
+        throw err;
+      }
+      break;
+    }
+
     try { data = JSON.parse(text); } catch { data = { raw: text }; }
 
     if (!r.ok) {
       console.error('RapidAPI following error', { page, status: r.status, body: text.slice(0, 400) });
-      // Если первая страница упала — это ошибка. Если упала после нескольких успешных — возвращаем что есть.
       if (page === 0) {
         const err = new Error(`Provider ${r.status}`);
         err.providerStatus = r.status;
@@ -251,6 +291,23 @@ async function callClaude(systemPrompt, userPrompt) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
+// Парсим username из любого формата:
+//   "username" / "@username" / "instagram.com/username" / "https://www.instagram.com/username/"
+function parseInstagramUsername(raw) {
+  if (typeof raw !== 'string') return null;
+  let s = raw.trim();
+  // Если это URL — извлекаем path
+  const urlMatch = s.match(/^(?:https?:\/\/)?(?:www\.)?instagram\.com\/([^/?#]+)/i);
+  if (urlMatch) s = urlMatch[1];
+  // Снимаем @ и приводим к lowercase
+  s = s.replace(/^@+/, '').toLowerCase();
+  // Срезаем хвостовой слеш если есть
+  s = s.replace(/\/+$/, '');
+  if (!/^[a-z0-9_.]{1,30}$/.test(s)) return null;
+  return s;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
 // Парсим вставленный вручную список
 function parseManualList(raw) {
   if (typeof raw !== 'string') return [];
@@ -299,9 +356,9 @@ export default async function handler(req, res) {
   } else if (typeof body.manualText === 'string' && body.manualText.trim()) {
     usernames = parseManualList(body.manualText);
   } else if (typeof body.username === 'string' && body.username.trim()) {
-    const u = body.username.trim().replace(/^@+/, '').toLowerCase();
-    if (!/^[a-z0-9_.]{1,30}$/.test(u)) {
-      return res.status(400).json({ error: 'Некоректний username' });
+    const u = parseInstagramUsername(body.username);
+    if (!u) {
+      return res.status(400).json({ error: 'Некоректний username або URL' });
     }
     try {
       usernames = await fetchFollowing(u);
