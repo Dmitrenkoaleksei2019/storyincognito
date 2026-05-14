@@ -106,13 +106,14 @@
           <div class="flex items-center pl-3 sm:pl-4 text-slate-400 sm:flex-1">
             <span class="text-slate-400 text-lg font-semibold">@</span>
             <input id="username" name="username" type="text" required
-                   placeholder="username" pattern="[A-Za-z0-9_.]{1,30}"
+                   placeholder="username або повне посилання"
                    class="w-full ml-1 py-3 text-slate-900 placeholder-slate-400 bg-transparent border-0 focus:ring-0 focus:outline-none text-base">
           </div>
-          <button type="submit"
-                  class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold hover:opacity-95 active:scale-[0.98] transition">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 11a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-            Згенерувати
+          <button type="submit" id="btnUser"
+                  class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold hover:opacity-95 active:scale-[0.98] disabled:opacity-70 disabled:cursor-wait transition min-w-[180px]">
+            <span class="btn-spinner hidden w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+            <svg class="btn-icon w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 11a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+            <span class="btn-label">Згенерувати</span>
           </button>
         </div>
         <p class="mt-3 text-xs text-slate-400">
@@ -131,9 +132,10 @@
                     class="w-full text-sm text-slate-900 placeholder-slate-400 bg-transparent border-0 focus:ring-0 focus:outline-none resize-y"></textarea>
           <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
             <span id="manualCount" class="text-xs text-slate-400">0 акаунтів</span>
-            <button type="submit"
-                    class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold text-sm hover:opacity-95 active:scale-[0.98] transition">
-              Згенерувати портрет
+            <button type="submit" id="btnManual"
+                    class="inline-flex items-center gap-2 px-5 py-2 rounded-xl bg-gradient-to-r from-brand-500 to-pink-500 text-white font-semibold text-sm hover:opacity-95 active:scale-[0.98] disabled:opacity-70 disabled:cursor-wait transition min-w-[170px] justify-center">
+              <span class="btn-spinner hidden w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin"></span>
+              <span class="btn-label">Згенерувати портрет</span>
             </button>
           </div>
         </div>
@@ -285,16 +287,18 @@
   const resultsContent = document.getElementById('resultsContent');
 
   const STR = {
-    loadingUser: u => `<div class="flex items-center gap-3 text-slate-700"><span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span>Збираємо підписки <strong>@${u}</strong> і будуємо портрет…</div>`,
-    loadingManual: n => `<div class="flex items-center gap-3 text-slate-700"><span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span>Аналізуємо ${n} акаунтів…</div>`,
+    loadingUser: u => `<div class="flex items-center gap-3 text-slate-700"><span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span><span>Збираємо підписки <strong>@${u}</strong> і будуємо портрет… <span class="text-slate-400 text-sm">(15–25 секунд)</span></span></div>`,
+    loadingManual: n => `<div class="flex items-center gap-3 text-slate-700"><span class="w-5 h-5 border-2 border-slate-300 border-t-brand-500 rounded-full animate-spin"></span><span>Аналізуємо ${n} акаунтів… <span class="text-slate-400 text-sm">(5–15 секунд)</span></span></div>`,
     accounts: n => `${n} акаунтів`,
     summaryHeader: 'Психопортрет',
     counted: n => `Проаналізовано <strong>${n}</strong> акаунтів`,
     disclaimer: 'Це фановий жанр. AI припускає, не діагностує. Будь-яке збігання з реальністю — це твоя заслуга або випадковість.',
     again: 'Згенерувати ще раз',
     copy: 'Скопіювати',
+    copyPlain: 'Без розмітки',
     share: 'Поділитися',
     copied: 'Скопійовано!',
+    loading: 'Генеруємо…',
   };
 
   function setMode(mode) {
@@ -324,39 +328,91 @@
       .map(p => p.trim().replace(/^@+/, '').toLowerCase())
       .filter(p => /^[a-z0-9_.]{1,30}$/.test(p))));
   }
+
+  // Парсим Instagram URL или username
+  function parseInstagramUsername(raw) {
+    if (!raw) return null;
+    let s = raw.trim();
+    const m = s.match(/^(?:https?:\/\/)?(?:www\.)?instagram\.com\/([^/?#]+)/i);
+    if (m) s = m[1];
+    s = s.replace(/^@+/, '').replace(/\/+$/, '').toLowerCase();
+    return /^[a-z0-9_.]{1,30}$/.test(s) ? s : null;
+  }
+
   manualText.addEventListener('input', () => {
     const n = parseManualNicks(manualText.value).length;
     manualCount.textContent = STR.accounts(n);
   });
 
-  // Very lightweight markdown → HTML (only **bold** + paragraphs + simple lists)
+  // Markdown → HTML рендерер: заголовки, bold, italic, backticks, списки, параграфы
   function mdToHtml(md) {
     const escape = (s) => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
     let s = escape(md);
+    // Заголовки # ## ###
+    s = s.replace(/^###\s+(.+)$/gm, '<h3 class="text-lg font-bold mt-5 mb-2">$1</h3>');
+    s = s.replace(/^##\s+(.+)$/gm, '<h3 class="text-xl font-bold mt-6 mb-3">$1</h3>');
+    s = s.replace(/^#\s+(.+)$/gm, '<h2 class="text-2xl font-extrabold mt-6 mb-4 leading-tight">$1</h2>');
+    // Backticks → <code>
+    s = s.replace(/`([^`\n]+)`/g, '<code class="px-1.5 py-0.5 rounded bg-slate-100 text-brand-600 text-[0.9em] font-mono">$1</code>');
+    // Bold + italic
     s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    s = s.replace(/\*(.+?)\*/g, '<em>$1</em>');
-    // Lists
+    s = s.replace(/(?<![*])\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '<em>$1</em>');
+    // Списки
     s = s.replace(/(^|\n)([-*•] .+(?:\n[-*•] .+)*)/g, (_, pre, block) => {
       const items = block.split('\n').map(l => l.replace(/^[-*•]\s+/, '').trim()).filter(Boolean);
       return pre + '<ul class="list-disc pl-5 space-y-1 my-3">' + items.map(i => `<li>${i}</li>`).join('') + '</ul>';
     });
-    // Paragraphs
+    // Параграфы
     s = s.split(/\n{2,}/).map(p => {
-      if (/^<ul/.test(p.trim())) return p;
+      const t = p.trim();
+      if (!t) return '';
+      if (/^<(h[123]|ul)/.test(t)) return p;
       return `<p class="mb-3 leading-relaxed">${p.replace(/\n/g, '<br>')}</p>`;
     }).join('');
     return s;
   }
 
+  // Чистый текст для копирования (без markdown-разметки, но с эмодзи)
+  function mdToPlain(md) {
+    return md
+      .replace(/^#{1,6}\s+/gm, '')           // снимаем # заголовки
+      .replace(/\*\*(.+?)\*\*/g, '$1')        // снимаем **bold**
+      .replace(/(?<![*])\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, '$1') // снимаем *italic*
+      .replace(/`([^`\n]+)`/g, '$1')          // снимаем `code`
+      .replace(/^\s*[-*•]\s+/gm, '• ')        // нормализуем буллеты
+      .replace(/\n{3,}/g, '\n\n')             // сжимаем пустые строки
+      .trim();
+  }
+
+  // Управление состоянием кнопок (loading)
+  function setButtonLoading(btn, loading) {
+    if (!btn) return;
+    btn.disabled = loading;
+    const spinner = btn.querySelector('.btn-spinner');
+    const icon = btn.querySelector('.btn-icon');
+    const label = btn.querySelector('.btn-label');
+    if (spinner) spinner.classList.toggle('hidden', !loading);
+    if (icon) icon.classList.toggle('hidden', loading);
+    if (label) label.textContent = loading ? STR.loading : (btn.id === 'btnUser' ? 'Згенерувати' : 'Згенерувати портрет');
+  }
+
+  // Скролл с учётом sticky шапки (64px)
+  function smoothScrollTo(el) {
+    const headerH = 64;
+    const top = el.getBoundingClientRect().top + window.scrollY - headerH - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
+  }
+
   function showLoading(html) {
     resultsSection.classList.remove('hidden');
-    resultsContent.innerHTML = html;
-    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    resultsContent.innerHTML = `<div class="rounded-2xl bg-white border border-slate-200 p-6">${html}</div>`;
+    smoothScrollTo(resultsSection);
   }
 
   function showError(msg) {
     resultsSection.classList.remove('hidden');
     resultsContent.innerHTML = `<div class="rounded-2xl bg-red-50 border border-red-200 p-6 text-red-800"><h3 class="font-semibold">Не вдалося згенерувати портрет</h3><p class="mt-1 text-sm">${msg}</p></div>`;
+    smoothScrollTo(resultsSection);
   }
 
   function showResult(data) {
@@ -369,40 +425,54 @@
             <h3 class="font-bold text-lg sm:text-xl">${STR.summaryHeader}</h3>
             <p class="text-xs text-slate-500 mt-1">${STR.counted(data.count)}</p>
           </div>
-          <div class="flex gap-2">
-            <button type="button" id="btnCopy" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">${STR.copy}</button>
-            <button type="button" id="btnShare" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">${STR.share}</button>
+          <div class="flex gap-2 flex-wrap">
+            <button type="button" id="btnCopy" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">📋 ${STR.copy}</button>
+            <button type="button" id="btnCopyPlain" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50" title="Без зірочок і backticks — добре для Telegram">✂️ ${STR.copyPlain}</button>
+            <button type="button" id="btnShare" class="text-xs px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">🔗 ${STR.share}</button>
           </div>
         </div>
         <div class="prose prose-slate prose-sm sm:prose-base max-w-none">${html}</div>
         <p class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">${STR.disclaimer}</p>
       </div>
     `;
-    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    smoothScrollTo(resultsSection);
 
-    // Copy/share handlers
+    // Copy markdown (как есть)
     document.getElementById('btnCopy').addEventListener('click', async () => {
       try {
         await navigator.clipboard.writeText(data.portrait);
-        document.getElementById('btnCopy').textContent = STR.copied;
-        setTimeout(() => { document.getElementById('btnCopy').textContent = STR.copy; }, 1500);
+        const b = document.getElementById('btnCopy');
+        b.textContent = '✅ ' + STR.copied;
+        setTimeout(() => { b.textContent = '📋 ' + STR.copy; }, 1500);
       } catch (e) {}
     });
+    // Copy plain text (без markdown — для Telegram/Twitter)
+    document.getElementById('btnCopyPlain').addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(mdToPlain(data.portrait));
+        const b = document.getElementById('btnCopyPlain');
+        b.textContent = '✅ ' + STR.copied;
+        setTimeout(() => { b.textContent = '✂️ ' + STR.copyPlain; }, 1500);
+      } catch (e) {}
+    });
+    // Share / fallback to copy URL
     document.getElementById('btnShare').addEventListener('click', async () => {
       if (navigator.share) {
-        try { await navigator.share({ title: 'Психопортрет за підписками', text: data.portrait, url: location.href }); } catch (e) {}
+        try { await navigator.share({ title: 'Психопортрет за підписками', text: mdToPlain(data.portrait), url: location.href }); } catch (e) {}
       } else {
         try {
           await navigator.clipboard.writeText(location.href);
-          document.getElementById('btnShare').textContent = STR.copied;
-          setTimeout(() => { document.getElementById('btnShare').textContent = STR.share; }, 1500);
+          const b = document.getElementById('btnShare');
+          b.textContent = '✅ ' + STR.copied;
+          setTimeout(() => { b.textContent = '🔗 ' + STR.share; }, 1500);
         } catch (e) {}
       }
     });
   }
 
-  async function callApi(payload, loadingHtml) {
+  async function callApi(payload, loadingHtml, btn) {
     showLoading(loadingHtml);
+    setButtonLoading(btn, true);
     try {
       const r = await fetch('/api/portrait', {
         method: 'POST',
@@ -418,21 +488,23 @@
       try { gtag('event', 'portrait_generated', { count: data.count }); } catch (e) {}
     } catch (e) {
       showError('Мережева помилка. Перевір з\'єднання та спробуй ще раз.');
+    } finally {
+      setButtonLoading(btn, false);
     }
   }
 
   formUser.addEventListener('submit', (e) => {
     e.preventDefault();
-    const u = usernameInput.value.trim().replace(/^@+/, '').toLowerCase();
-    if (!/^[a-z0-9_.]{1,30}$/.test(u)) { showError('Некоректний username.'); return; }
-    callApi({ username: u }, STR.loadingUser(u));
+    const u = parseInstagramUsername(usernameInput.value);
+    if (!u) { showError('Некоректний username або посилання Instagram.'); return; }
+    callApi({ username: u }, STR.loadingUser(u), document.getElementById('btnUser'));
   });
 
   formManual.addEventListener('submit', (e) => {
     e.preventDefault();
     const list = parseManualNicks(manualText.value);
     if (list.length < 10) { showError('Потрібно щонайменше 10 акаунтів.'); return; }
-    callApi({ manualList: list }, STR.loadingManual(list.length));
+    callApi({ manualList: list }, STR.loadingManual(list.length), document.getElementById('btnManual'));
   });
 })();
 </script>
