@@ -21,7 +21,7 @@
   ],
   "functions": {
     "api/stories.js": { "maxDuration": 10 },
-    "api/portrait.js": { "maxDuration": 30 },
+    "api/portrait.js": { "maxDuration": 60 },
     "api/cron/daily-report.js": { "maxDuration": 60 }
   },
   "crons": [
