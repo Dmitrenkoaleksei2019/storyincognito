@@ -66,10 +66,13 @@ export default async function handler(req, res) {
 
 // Приводим разные форматы провайдеров к единому виду:
 //   { items: [{ type: 'image'|'video', url, thumb? }] }
+//
+// Скрапер instagram-scraper-20251 в 2026 поменял формат:
+//   - изображения теперь в image_versions.items[].url (раньше image_versions2.candidates)
+//   - is_video, media_format ("image"|"video"), media_type (1=image, 2=video) — все могут присутствовать
 function normalize(data) {
   if (!data || typeof data !== 'object') return [];
 
-  // Часто встречающиеся поля
   const candidates =
     (Array.isArray(data) && data) ||
     data.items ||
@@ -77,24 +80,61 @@ function normalize(data) {
     data.data?.items ||
     data.data?.stories ||
     data.result?.items ||
+    data.result?.stories ||
     [];
 
   if (!Array.isArray(candidates)) return [];
 
   return candidates.map(it => {
-    const isVideo = !!(it.video_url || it.video || it.is_video || it.media_type === 2);
+    if (!it || typeof it !== 'object') return null;
+
+    // Определяем тип контента — пробуем все варианты от нового к старому
+    const isVideo = !!(
+      it.is_video ||
+      it.media_format === 'video' ||
+      it.media_type === 2 ||
+      it.video_url ||
+      it.video
+    );
+
+    // URL основного контента
     let url = it.video_url || it.video || it.url || it.media_url;
+
+    // Если это видео — копаем video_versions (массив объектов с url)
+    if (isVideo && !url) {
+      const vv = it.video_versions;
+      if (Array.isArray(vv) && vv.length) {
+        url = vv[0]?.url;
+      } else if (vv && Array.isArray(vv.items) && vv.items.length) {
+        // Новый формат: video_versions.items[]
+        url = vv.items[0]?.url;
+      }
+    }
+
+    // Если это картинка (или у видео нет video_url) — берём из image_versions
+    if (!url) {
+      // НОВЫЙ формат 2026: image_versions.items[].url
+      const iv = it.image_versions;
+      if (iv && Array.isArray(iv.items) && iv.items.length) {
+        // Берём самое большое разрешение (обычно items[0] — самый большой)
+        url = iv.items[0]?.url;
+      } else if (it.image_versions2?.candidates?.length) {
+        // ЛЕГАСИ формат
+        url = it.image_versions2.candidates[0].url;
+      }
+    }
+
+    // Превью — отдельное поле или то же изображение
     let thumb = it.thumbnail_url || it.thumbnail || it.image_url || it.display_url || it.preview_url;
-    // Иногда массив image_versions2.candidates
-    if (!url && it.image_versions2?.candidates?.length) {
-      url = it.image_versions2.candidates[0].url;
+    if (!thumb) {
+      const iv = it.image_versions;
+      if (iv && Array.isArray(iv.items) && iv.items.length) {
+        thumb = iv.items[iv.items.length - 1]?.url; // самый маленький — для превью
+      } else if (it.image_versions2?.candidates?.length) {
+        thumb = it.image_versions2.candidates[0].url;
+      }
     }
-    if (isVideo && !url && it.video_versions?.length) {
-      url = it.video_versions[0].url;
-    }
-    if (!thumb && it.image_versions2?.candidates?.length) {
-      thumb = it.image_versions2.candidates[0].url;
-    }
+
     return url ? { type: isVideo ? 'video' : 'image', url, thumb } : null;
   }).filter(Boolean);
 }
