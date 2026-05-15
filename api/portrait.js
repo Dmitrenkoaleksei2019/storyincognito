@@ -28,9 +28,10 @@
 const rateStore = new Map(); // ip → { hour: [ts...], day: [ts...] }
 const HOUR_MS = 60 * 60 * 1000;
 const DAY_MS = 24 * HOUR_MS;
-const HOUR_LIMIT = 3;
-const DAY_LIMIT = 30;
-const GLOBAL_DAILY_CAP = 500; // защита от ботнета — общий лимит на инстанс
+// Лимиты можно переопределить через env (для боевого режима понизить):
+const HOUR_LIMIT = Number(process.env.PORTRAIT_HOUR_LIMIT) || 15;
+const DAY_LIMIT = Number(process.env.PORTRAIT_DAY_LIMIT) || 60;
+const GLOBAL_DAILY_CAP = Number(process.env.PORTRAIT_GLOBAL_CAP) || 500; // защита от ботнета
 let globalDailyCount = 0;
 let globalResetAt = Date.now() + DAY_MS;
 
