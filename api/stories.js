@@ -24,12 +24,25 @@ export default async function handler(req, res) {
   const KEY = process.env.RAPIDAPI_KEY;
   const HOST = process.env.RAPIDAPI_HOST || 'instagram-scraper-stable-api.p.rapidapi.com';
   const PATH = process.env.STORIES_PATH || '/v1/stories/{username}';
+  const USERNAME_PARAM = process.env.STORIES_USERNAME_PARAM || 'username_or_id';
 
   if (!KEY) {
     return res.status(500).json({ error: 'API ключ не настроен. Добавьте RAPIDAPI_KEY в env переменные Vercel.' });
   }
 
-  const url = `https://${HOST}${PATH.replace('{username}', encodeURIComponent(raw))}`;
+  // Собираем URL: поддерживаем path-style (PATH с {username}) и query-style (через STORIES_USERNAME_PARAM).
+  // Скрапер instagram-scraper-20251 требует ?username_or_id=...&count=50
+  let url;
+  if (PATH.includes('{username}')) {
+    url = `https://${HOST}${PATH.replace('{username}', encodeURIComponent(raw))}`;
+    // Добавляем count=50 если в пути ещё нет
+    if (!/[?&]count=/.test(url)) {
+      url += (url.includes('?') ? '&' : '?') + 'count=50';
+    }
+  } else {
+    const sep = PATH.includes('?') ? '&' : '?';
+    url = `https://${HOST}${PATH}${sep}${USERNAME_PARAM}=${encodeURIComponent(raw)}&count=50`;
+  }
 
   try {
     const r = await fetch(url, {
@@ -61,6 +74,10 @@ export default async function handler(req, res) {
         username: raw,
         items,
         debug: {
+          request_url: url,
+          env_path: PATH,
+          env_username_param: USERNAME_PARAM,
+          env_host: HOST,
           provider_status: r.status,
           provider_response: data,
           items_count: items.length,
