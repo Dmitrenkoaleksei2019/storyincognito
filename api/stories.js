@@ -55,6 +55,19 @@ export default async function handler(req, res) {
 
     const items = normalize(data);
 
+    // Дебаг-режим: ?debug=1 — возвращает сырой ответ провайдера для диагностики
+    if (req.query.debug === '1') {
+      return res.status(200).json({
+        username: raw,
+        items,
+        debug: {
+          provider_status: r.status,
+          provider_response: data,
+          items_count: items.length,
+        },
+      });
+    }
+
     // Кешируем 60 секунд на CDN — снижаем нагрузку на RapidAPI и расход квоты
     res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate=120');
     return res.status(200).json({ username: raw, items });
